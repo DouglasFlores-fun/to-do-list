@@ -15,7 +15,7 @@ class ToDoGroupController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(ToDoGroup::with('tasks')->get());
+        return response()->json(ToDoGroup::with('task')->get());
     }
 
     /**
@@ -39,7 +39,7 @@ class ToDoGroupController extends Controller
      */
     public function show($id)
     {
-        return response()->json($toDoGroup->load('tasks'));
+        return response()->json($toDoGroup->load('task'));
     }
 
     /**

@@ -10,7 +10,7 @@ class ToDoGroup extends Model
     use HasFactory;
     protected $fillable = ['name'];
 
-    public function lists()
+    public function task()
     {
         return $this->hasMany(ToDoList::class, 'group_id');
     }

@@ -13,7 +13,17 @@ class ToDoListController extends Controller
      */
     public function index()
     {
-        //
+        $query = ToDoList::query();
+
+        if ($request->has('group_id')) {
+            $query->where('group_id', $request->group_id);
+        }
+        
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        return response()->json($query->get());
     }
 
     /**
@@ -24,7 +34,18 @@ class ToDoListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'task' => 'required|string|max:255',
+            'group_id' => 'required|exists:to_do_groups,id',
+        ]);
+
+        $task = ToDoList::create([
+            'task' => $request->task,
+            'group_id' => $request->group_id,
+            'status' => false,
+        ]);
+
+        return response()->json($task, 201);
     }
 
     /**
@@ -47,7 +68,9 @@ class ToDoListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate(['status' => 'required|boolean']);
+        $toDoList->update(['status' => $request->status]);
+        return response()->json($toDoList);
     }
 
     /**
@@ -58,6 +81,7 @@ class ToDoListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $toDoList->delete();
+        return response()->json(['message' => 'Task deleted successfully']);
     }
 }

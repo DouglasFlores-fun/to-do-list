@@ -13,7 +13,7 @@ class ToDoGroupController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(ToDoGroup::with('tasks')->get());
     }
 
     /**
@@ -24,7 +24,9 @@ class ToDoGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'required|string|max:255']);
+        $group = ToDoGroup::create(['name' => $request->name]);
+        return response()->json($group, 201);
     }
 
     /**
@@ -35,7 +37,7 @@ class ToDoGroupController extends Controller
      */
     public function show($id)
     {
-        //
+        return response()->json($toDoGroup->load('tasks'));
     }
 
     /**
@@ -58,6 +60,7 @@ class ToDoGroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $toDoGroup->delete();
+        return response()->json(['message' => 'Group deleted successfully']);
     }
 }

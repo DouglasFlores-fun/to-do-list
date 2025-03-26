@@ -12,6 +12,6 @@ class ToDoGroup extends Model
 
     public function lists()
     {
-        return $this->hasMany(ToDoList::class, 'groupId');
+        return $this->hasMany(ToDoList::class, 'group_id');
     }
 }

@@ -8,14 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ToDoList extends Model
 {
     use HasFactory;
-    protected $fillable = ['groupId', 'description', 'isOpen'];
-
-    protected $casts = [
-        'isOpen' => 'boolean',
-    ];
+    protected $fillable = ['group_id', 'task', 'status'];
 
     public function group()
     {
-        return $this->belongsTo(ToDoGroup::class, 'groupId');
+        return $this->belongsTo(ToDoGroup::class, 'group_id');
     }
 }

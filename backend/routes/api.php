@@ -22,5 +22,8 @@ use App\Http\Controllers\ToDoListController;
 
 
 Route::apiResource('groups', ToDoGroupController::class);
-Route::apiResource('tasks', ToDoListController::class)->except(['show']);
+
 Route::post('tasks', [ToDoListController::class, 'store'])->middleware('validateToDo');
+Route::put('tasks/{id}', [ToDoListController::class, 'update'])->middleware('validate.status.task');
+Route::apiResource('tasks', ToDoListController::class)->except(['show, update']);
+

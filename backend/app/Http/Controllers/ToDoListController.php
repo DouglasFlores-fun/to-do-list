@@ -66,17 +66,35 @@ class ToDoListController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\ToDoList  $toDoList
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
 
      /**
       *
       */
-    public function update(Request $request, ToDoList $toDoList)
+    public function update(Request $request, int $id)
     {
-        $request->validate(['status' => 'required|boolean']);
-        $toDoList->update(['status' => $request->status]);
+        if($request)
+
+        $toDoList = ToDoList::find($id);
+        if(!$toDoList){
+            return response()->json(['message'=> "Task not exist"], Response::HTTP_NOT_FOUND);
+        }
+
+        if ($request->has('status')) {
+            $toDoList->status = $request->status;
+        }
+
+        if ($request->has('task')) {
+            $toDoList->task = $request->task;
+        }
+
+        $result = $toDoList->save();
+
+        if(!$result){
+            return response()->json(['message'=> "Can't update task"], Response::HTTP_BAD_REQUEST);
+        }
         return response()->json($toDoList);
     }
 

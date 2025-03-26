@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ToDoList;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Response;
 
 class ToDoListController extends Controller
 {
@@ -20,7 +21,7 @@ class ToDoListController extends Controller
         if ($request->has('group_id')) {
             $query->where('group_id', $request->group_id);
         }
-        
+
         if ($request->has('status')) {
             $query->where('status', $request->status);
         }
@@ -65,10 +66,14 @@ class ToDoListController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  App\Models\ToDoList  $toDoList
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+     /**
+      *
+      */
+    public function update(Request $request, ToDoList $toDoList)
     {
         $request->validate(['status' => 'required|boolean']);
         $toDoList->update(['status' => $request->status]);
@@ -83,6 +88,11 @@ class ToDoListController extends Controller
      */
     public function destroy($id)
     {
+        $toDoList = ToDoList::find($id);
+        if(!$toDoList){
+            return response()->json(['message' => 'Task not found'], Response::HTTP_NOT_FOUND);
+        }
+
         $toDoList->delete();
         return response()->json(['message' => 'Task deleted successfully']);
     }

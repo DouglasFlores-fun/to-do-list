@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ToDoGroupController;
 use App\Http\Controllers\ToDoListController;
@@ -25,5 +26,10 @@ Route::apiResource('groups', ToDoGroupController::class);
 
 Route::post('tasks', [ToDoListController::class, 'store'])->middleware('validateToDo');
 Route::put('tasks/{id}', [ToDoListController::class, 'update'])->middleware('validate.status.task');
-Route::apiResource('tasks', ToDoListController::class)->except(['show, update']);
+Route::delete('tasks/{id}', [ToDoListController::class, 'destroy']);
+Route::apiResource('tasks', ToDoListController::class)->except(['show', 'update', 'destroy']);
+
+Route::any('{any}',function(){
+    return response('', Response::HTTP_NOT_FOUND);
+});
 

@@ -17,8 +17,9 @@ class ValidateToDoList
     public function handle(Request $request, Closure $next)
     {
         $request->validate([
-            'task' => 'required|string|max:255',
-            'group_id' => 'required|exists:to_do_groups,id',
+            'title' => 'required|string|max:100',
+            'description' => 'string|max:255',
+            'due_date' => 'required|date'
         ]);
 
         return $next($request);

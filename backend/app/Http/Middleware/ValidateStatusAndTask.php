@@ -19,10 +19,10 @@ class ValidateStatusAndTask
     public function handle(Request $request, Closure $next)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'string|max:100',
-            'description' => 'string|max:255',
-            'due_date' => 'string|date',
-            'completed' => 'boolean'
+            'title' => 'string|max:100|required_without_all:description,due_date,completed',
+            'description' => 'string|max:255|required_without_all:title,due_date,completed',
+            'due_date' => 'string|date|required_without_all:title,description,completed',
+            'completed' => 'boolean|required_without_all:title,description,due_date'
         ]);
 
         if ($validator->fails()) {

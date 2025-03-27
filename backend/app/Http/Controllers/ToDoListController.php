@@ -74,12 +74,20 @@ class ToDoListController extends Controller
             return response()->json(['message'=> "Task not exist"], Response::HTTP_NOT_FOUND);
         }
 
-        if ($request->has('status')) {
-            $toDoList->status = $request->status;
+        if ($request->has('title')) {
+            $toDoList->title = $request->title;
         }
 
-        if ($request->has('task')) {
-            $toDoList->task = $request->task;
+        if ($request->has('description')) {
+            $toDoList->description = $request->description;
+        }
+
+        if ($request->has('completed')) {
+            $toDoList->completed = $request->completed;
+        }
+
+        if ($request->has('due_date')) {
+            $toDoList->due_date = $request->due_date;
         }
 
         $result = $toDoList->save();

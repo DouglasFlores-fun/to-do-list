@@ -37,16 +37,17 @@ class ToDoListController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'task' => 'required|string|max:255',
-            'group_id' => 'required|exists:to_do_groups,id',
-        ]);
 
         $task = ToDoList::create([
-            'task' => $request->task,
-            'group_id' => $request->group_id,
-            'status' => false,
+            'title' => $request->title,
+            'description' => $request->description,
+            'due_date'=> $request->due_date,
+            'completed' => false,
         ]);
+
+        if(!$task){
+            return response()->json(["message"=>"Can't create task"], Response::HTTP_EXPECTATION_FAILED);
+        }
 
         return response()->json($task, 201);
     }

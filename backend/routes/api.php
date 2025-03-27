@@ -25,7 +25,8 @@ use App\Http\Controllers\ToDoListController;
 Route::post('tasks', [ToDoListController::class, 'store'])->middleware('validateToDo');
 Route::put('tasks/{id}', [ToDoListController::class, 'update'])->middleware('validate.status.task');
 Route::delete('tasks/{id}', [ToDoListController::class, 'destroy']);
-Route::apiResource('tasks', ToDoListController::class)->except(['show', 'update', 'destroy', 'store']);
+Route::get('tasks', [ToDoListController::class, 'index']);
+Route::get('tasks/{id}', [ToDoListController::class, 'show']);
 
 Route::any('{any}',function(){
     return response('', Response::HTTP_NOT_FOUND);

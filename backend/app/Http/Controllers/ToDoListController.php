@@ -17,15 +17,6 @@ class ToDoListController extends Controller
     public function index(Request $request)
     {
         $query = ToDoList::query();
-
-        if ($request->has('group_id')) {
-            $query->where('group_id', $request->group_id);
-        }
-
-        if ($request->has('status')) {
-            $query->where('status', $request->status);
-        }
-
         return response()->json($query->get());
     }
 

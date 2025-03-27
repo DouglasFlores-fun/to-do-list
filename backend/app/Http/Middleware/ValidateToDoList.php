@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class ValidateToDoList
 {
@@ -16,11 +18,19 @@ class ValidateToDoList
      */
     public function handle(Request $request, Closure $next)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:100',
             'description' => 'string|max:255',
             'due_date' => 'required|date'
         ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => 'Missing data',
+                'messages' => $validator->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
         return $next($request);
     }

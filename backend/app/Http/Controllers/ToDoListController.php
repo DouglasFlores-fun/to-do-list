@@ -17,6 +17,11 @@ class ToDoListController extends Controller
     public function index(Request $request)
     {
         $query = ToDoList::query();
+        if ($request->has('sort_by') && in_array($request->sort_by, ['completed', 'due_date'])) {
+            $sortDirection = $request->get('sort_direction', 'asc');
+            if(in_array($sortDirection, ['asc','desc']))
+                $query->orderBy($request->sort_by, $sortDirection);
+        }
         return response()->json($query->get());
     }
 

@@ -17,6 +17,16 @@ class ToDoListController extends Controller
     public function index(Request $request)
     {
         $query = ToDoList::query();
+
+        //Filter by status
+        if ($request->has('completed')) {
+            $completed = filter_var($request->completed, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            if (!is_null($completed)) {
+                $query->where('completed', $completed);
+            }
+        }
+
+        //Sort query
         if ($request->has('sort_by') && in_array($request->sort_by, ['completed', 'due_date'])) {
             $sortDirection = $request->get('sort_direction', 'asc');
             if(in_array($sortDirection, ['asc','desc']))
@@ -56,7 +66,12 @@ class ToDoListController extends Controller
      */
     public function show($id)
     {
-        //
+        $toDoList = ToDoList::find($id);
+        if(!$toDoList){
+            return response()->json(['message'=> "Task not exist"], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json($toDoList, Response::HTTP_OK);
     }
 
     /**

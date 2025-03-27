@@ -22,8 +22,6 @@ use App\Http\Controllers\ToDoListController;
 });*/
 
 
-Route::apiResource('groups', ToDoGroupController::class);
-
 Route::post('tasks', [ToDoListController::class, 'store'])->middleware('validateToDo');
 Route::put('tasks/{id}', [ToDoListController::class, 'update'])->middleware('validate.status.task');
 Route::delete('tasks/{id}', [ToDoListController::class, 'destroy']);

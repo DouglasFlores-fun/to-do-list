@@ -8,10 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ToDoList extends Model
 {
     use HasFactory;
-    protected $fillable = ['group_id', 'task', 'status'];
-
-    public function group()
-    {
-        return $this->belongsTo(ToDoGroup::class, 'group_id');
-    }
+    protected $fillable = ['title', 'description', 'completed', 'due_date'];
 }

@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('to_do_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('group_id')->constrained('to_do_groups')->onDelete('cascade');
-            $table->string('task');
-            $table->boolean('status')->default(true);
+            $table->string('title');
+            $table->string('description');
+            $table->boolean('completed')->default(false);
+            $table->timestamp('due_date');
             $table->timestamps();
         });
     }

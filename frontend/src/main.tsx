@@ -6,6 +6,6 @@ import TailwindTest from "@pages/TailwindTest.tsx"
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <TailwindTest />
+    <ToDoList />
   </StrictMode>,
 )

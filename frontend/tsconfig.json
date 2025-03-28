@@ -8,7 +8,8 @@
     "baseUrl": "./src",  // This makes the "src" folder the base path
     "paths": {
       "components/*": ["./components/*"],
-      "pages/*": ["./pages/*"]
+      "pages/*": ["./pages/*"],
+      "interfaces/*": ["./interfaces/*"]
     },
     "jsx": "react-jsx"
   }

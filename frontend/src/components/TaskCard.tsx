@@ -32,10 +32,10 @@ const TaskCard: React.FC<TaskCardProps> = ( props:TaskCardProps) => {
         <h2 className="text-xl font-semibold text-gray-800">{props.task.title}</h2>
         <p
           className={`text-sm font-medium ${
-            props.task.completed === true ? "text-green-600" : "text-yellow-600"
+            props.task.completed ? "text-green-600" : "text-yellow-600"
           }`}
         >
-          {props.task.completed === true ? "Completed" : "Pending"}
+          {props.task.completed ? "Completed" : "Pending"}
         </p>
         <p className="text-sm text-gray-600">{props.task.description}</p>
       </div>

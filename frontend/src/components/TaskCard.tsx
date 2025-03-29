@@ -5,6 +5,7 @@ import { TaskItem } from "@interfaces";
 import TaskModal from "./TaskModal";
 import { deleteTask, updateTaskStatus } from "../helpers/api/api";
 import SpinnerModal from "./SpinnerModal";
+import { convertUTCtoDateLocal } from "../helpers";
 
 interface TaskCardProps {
     task: TaskItem,
@@ -62,7 +63,7 @@ const TaskCard: React.FC<TaskCardProps> = ( props:TaskCardProps) => {
 
       <div className="flex items-center space-x-2">
         <span className="text-sm text-gray-500">
-          Due: {props.task.dueDate}
+          Due: {convertUTCtoDateLocal(props.task.dueDate)}
         </span>
       </div>
 
@@ -74,7 +75,7 @@ const TaskCard: React.FC<TaskCardProps> = ( props:TaskCardProps) => {
           {props.task.completed ? "Open" : "Close"}
         </button>
 
-        <TaskModal title="Edit Task" buttonText="Edit" editItem={true} taskItem={{...props.task, dueDate: new Date(props.task.dueDate).toLocaleDateString()}} onCompleted={props.onCompleted} />
+        <TaskModal title="Edit Task" buttonText="Edit" editItem={true} taskItem={props.task} onCompleted={props.onCompleted} />
 
         <button
           onClick={() => {removeTask(props.task)}}

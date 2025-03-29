@@ -29,7 +29,7 @@ const ToDoList = () => {
 
   const reaload = ()=>{
     getTask(filters).then((response)=>{
-      const data:[TaskItem] = response.data.map((item)=>{return {...item, dueDate: new Date(item.due_date).toLocaleDateString()}}) as [TaskItem];
+      const data:[TaskItem] = response.data.map((item)=>{return {...item, dueDate: item.due_date}}) as [TaskItem];
       setAllTask(data);
     }).catch((error)=>{
       setAllTask([]);

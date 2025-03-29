@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { TaskItem } from "@interfaces";
 import { createTask, updateTask } from "../helpers/api/api";
 import SpinnerModal from "./SpinnerModal";
+import { convertDateLocalToUTC, convertUTCtoDateLocal } from "../helpers";
 
 interface TaskModal {
   editItem: boolean;
@@ -15,7 +16,7 @@ interface TaskModal {
 
 const TaskModal:React.FC<TaskModal> = (props:TaskModal) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<TaskItem>({...props.taskItem});
+  const [formData, setFormData] = useState<TaskItem>({...props.taskItem, dueDate: convertUTCtoDateLocal(props.taskItem.dueDate)});
   const resetForm = () => {
       setFormData({
         title: "",
@@ -36,7 +37,7 @@ const TaskModal:React.FC<TaskModal> = (props:TaskModal) => {
     e.preventDefault();
     modalSpinnerRef.current?.startLoading();
     if(!props.editItem){
-      createTask(formData).then(()=>{
+      createTask({...formData, dueDate: convertDateLocalToUTC(formData.dueDate)}).then(()=>{
         props.onCompleted();
         modalSpinnerRef.current?.stopLoading(false);
         resetForm();
@@ -45,7 +46,7 @@ const TaskModal:React.FC<TaskModal> = (props:TaskModal) => {
         modalSpinnerRef.current?.stopLoading(false);
       });
     }else{
-      updateTask(formData).then(()=>{
+      updateTask({...formData, dueDate: convertDateLocalToUTC(formData.dueDate)}).then(()=>{
         props.onCompleted();
         modalSpinnerRef.current?.stopLoading(false);
       }).catch((error)=>{

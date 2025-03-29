@@ -18,7 +18,7 @@ const ToDoList = () => {
 
   const reaload = ()=>{
     getTask().then((response)=>{
-      const data:[TaskItem] = response.data as [TaskItem];
+      const data:[TaskItem] = response.data.map((item)=>{return {...item, dueDate:item.due_date}}) as [TaskItem];
       setAllTask(data);
     }).catch((error)=>{
       setAllTask([]);

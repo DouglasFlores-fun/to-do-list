@@ -54,7 +54,7 @@ const TaskCard: React.FC<TaskCardProps> = ( props:TaskCardProps) => {
           {props.task.completed ? "Open" : "Close"}
         </button>
 
-        <TaskModal title="Edit Task" buttonText="Edit" editItem={true} taskItem={props.task} onCompleted={props.onCompleted} />
+        <TaskModal title="Edit Task" buttonText="Edit" editItem={true} taskItem={{...props.task, dueDate: new Date(props.task.dueDate).toLocaleDateString()}} onCompleted={props.onCompleted} />
 
         <button
           onClick={() => {removeTask(props.task)}}

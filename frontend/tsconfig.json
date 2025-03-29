@@ -9,7 +9,8 @@
     "paths": {
       "components/*": ["./components/*"],
       "pages/*": ["./pages/*"],
-      "interfaces/*": ["./interfaces/*"]
+      "interfaces/*": ["./interfaces/*"],
+      "helpers/*": ["./helpers/*"],
     },
     "jsx": "react-jsx"
   }

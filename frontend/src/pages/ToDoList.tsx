@@ -1,13 +1,16 @@
 // src/components/ToDoList.tsx
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import TaskCard from "@components/TaskCard";
 import { TaskItem } from "@interfaces";
 import { getTask } from "../helpers/api/api";
 import TaskModal from "../components/TaskModal";
+import SpinnerModal from "../components/SpinnerModal";
 
 const ToDoList = () => {
   // Initial sample todos
+  
+
   const [allTask, setAllTask] = useState<TaskItem[]>([]);
 
   const [error, setError] = useState<string>("");
@@ -32,7 +35,7 @@ const ToDoList = () => {
       {/* Header List / Actions buttons */}
       <div className="flex justify-between items-center mb-6 space-x-4">
         <div className="flex space-x-1">
-         <TaskModal onCompleted={()=>{reaload()}}/>
+         <TaskModal editItem={false} buttonText="Add Task" title="Add Task" taskItem={{ id:0, title:"", description:"", completed: false, dueDate: "" }} onCompleted={()=>{reaload()}}/>
         </div>
       </div>
 

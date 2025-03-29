@@ -1,9 +1,10 @@
 // src/components/ToDoList.tsx
 
-import React from "react";
+import React, {useRef} from "react";
 import { TaskItem } from "@interfaces";
 import TaskModal from "./TaskModal";
 import { deleteTask, updateTaskStatus } from "../helpers/api/api";
+import SpinnerModal from "./SpinnerModal";
 
 interface TaskCardProps {
     task: TaskItem,
@@ -12,16 +13,35 @@ interface TaskCardProps {
 
 
 const TaskCard: React.FC<TaskCardProps> = ( props:TaskCardProps) => {
+
+  const modalSpinnerRef = useRef<{ startLoading: () => void, stopLoading: (resultHasError:boolean) => void } | null>(null);
   
+
   const updateTaskState = (taskItem: TaskItem) =>{
-    updateTaskStatus(taskItem).then(()=>{props.onCompleted()}).catch((error)=>{console.log(error)});
+    modalSpinnerRef.current?.startLoading();
+    updateTaskStatus(taskItem).then(()=>{
+      props.onCompleted();
+      modalSpinnerRef.current?.stopLoading(false);
+    }).catch((error)=>{
+      console.log(error);
+      modalSpinnerRef.current?.stopLoading(true);
+    });
   };
 
   const removeTask = (taskItem: TaskItem) =>{
-    deleteTask(taskItem).then(()=>{props.onCompleted()}).catch((error)=>{console.log(error)});
+    modalSpinnerRef.current?.startLoading();
+    deleteTask(taskItem).then(()=>{
+      props.onCompleted();
+      modalSpinnerRef.current?.stopLoading(false);
+    }).catch((error)=>{
+      console.log(error);
+      modalSpinnerRef.current?.stopLoading(true);
+    });
   };
 
   return (
+    <>
+    <SpinnerModal ref={modalSpinnerRef} />
     <div
       key={props.task.id}
       className={`flex justify-between items-center p-4 ${
@@ -64,6 +84,7 @@ const TaskCard: React.FC<TaskCardProps> = ( props:TaskCardProps) => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

@@ -22,3 +22,11 @@ export const updateTask = async (taskItem:TaskItem) => instance.put(`${apiPath.t
   }
 });
 
+export const updateTaskStatus = async (taskItem:TaskItem) => instance.put(`${apiPath.task}/${taskItem.id}`, JSON.stringify({completed: !taskItem.completed}), {
+  headers: {
+    "Content-Type": "application/json", 
+  }
+});
+
+export const deleteTask = async (taskItem:TaskItem) => instance.delete(`${apiPath.task}/${taskItem.id}`);
+

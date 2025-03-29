@@ -46,7 +46,7 @@ const ToDoList = () => {
             <TaskCard key={task.id} task={{id: task.id, 
               description:task.description, 
               title:task.title, 
-              status: task.status, 
+              completed: task.completed, 
               dueDate: task.dueDate,
             }}  
             onCompleted={reaload}

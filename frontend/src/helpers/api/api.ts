@@ -10,7 +10,7 @@ const instance = axios.create({
 
 interface iFilters {
   status?:number;
-  orderBy?: string;
+  sortBy?: string;
   orderDirection?: number;
 }
 
@@ -20,6 +20,13 @@ export const getTask = async (filters:iFilters) => {
 
   if(typeof filters.status !== "undefined" && filters.status >=0 ){
     params.completed = filters.status;
+  }
+
+  if(filters.sortBy){
+    if(filters.sortBy === "dueDate"){
+      params.sort_by = "due_date";
+      params.sort_direction = filters.orderDirection === 1 ? "asc" : "desc";
+    }
   }
 
 

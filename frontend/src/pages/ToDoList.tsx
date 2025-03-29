@@ -10,7 +10,7 @@ import SpinnerModal from "../components/SpinnerModal";
 
 interface iFilters {
   status:number,
-  orderBy: string,
+  sortBy: string,
   orderDirection: number,
 }
 
@@ -19,7 +19,7 @@ const ToDoList = () => {
   
 
   const [allTask, setAllTask] = useState<TaskItem[]>([]);
-  const [filters, setFilters] = useState<iFilters>({status:-1, orderBy:"due_date", orderDirection:1});
+  const [filters, setFilters] = useState<iFilters>({status:-1, sortBy:"due_date", orderDirection:1});
 
   const [error, setError] = useState<string>("");
 
@@ -40,6 +40,10 @@ const ToDoList = () => {
   const handleFilterStatusSelection = (e:React.ChangeEvent<HTMLInputElement>)=>{
     e.preventDefault();
     setFilters({...filters, status: Number(e.target.value)});
+  }
+
+  const handleSort = (e:React.MouseEvent<HTMLButtonElement>)=>{
+    setFilters({...filters, sortBy: "dueDate", orderDirection: filters.orderDirection === 1 ? -1 : 1});
   }
 
   
@@ -68,6 +72,16 @@ const ToDoList = () => {
             <option value="0">Pending</option>
             <option value="1">Completed</option>
           </select>
+        </div>
+        <div className="flex space-x-4">
+            <div className="flex space-x-4">
+              <button
+                className="p-3 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-200"
+                onClick={handleSort}
+              >
+                  Due Date ({filters.orderDirection === 1 ? "↑" : "↓"})
+              </button>
+          </div>
         </div>
       </div>
 

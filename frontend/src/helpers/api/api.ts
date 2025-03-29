@@ -1,5 +1,6 @@
 import axios from "axios";
 import { apiPath, apiUrl } from "../../app.config";
+import { TaskItem } from "../../interfaces";
 
 
 const instance = axios.create({
@@ -8,4 +9,16 @@ const instance = axios.create({
   });
 
 export const getTask = async () => instance.get(apiPath.task);
+
+export const createTask = async (taskItem:TaskItem) => instance.post(apiPath.task, JSON.stringify({...taskItem, due_date: taskItem.dueDate}), {
+  headers: {
+    "Content-Type": "application/json", 
+  }
+});
+
+export const updateTask = async (taskItem:TaskItem) => instance.put(`${apiPath.task}/${taskItem.id}`, JSON.stringify({...taskItem, due_date: taskItem.dueDate}), {
+  headers: {
+    "Content-Type": "application/json", 
+  }
+});
 

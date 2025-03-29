@@ -2,12 +2,13 @@
 
 import React from "react";
 import { TaskItem } from "@interfaces";
+import TaskModal from "./TaskModal";
 
 interface TaskCardProps {
     task: TaskItem,
     onMark: (id: number) => void;
-    onEdit: (id: number) => void;
     onDelete: (id: number) => void;
+    onCompleted: () => void;
 }
 
 
@@ -46,12 +47,7 @@ const TaskCard: React.FC<TaskCardProps> = ( props:TaskCardProps) => {
           {props.task.status ? "Open" : "Close"}
         </button>
 
-        <button
-          onClick={() => props.onEdit(props.task.id)}
-          className="bg-gray-400 text-white px-3 py-2 rounded-md hover:bg-gray-700 transition-colors duration-300"
-        >
-          Edit
-        </button>
+        <TaskModal title="Edit Task" buttonText="Edit" editItem={true} taskItem={props.task} onCompleted={props.onCompleted} />
 
         <button
           onClick={() => props.onDelete(props.task.id)}

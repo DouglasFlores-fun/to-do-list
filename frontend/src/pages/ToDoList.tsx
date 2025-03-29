@@ -23,6 +23,7 @@ const ToDoList = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-8">
+      <h1 className="text-5xl font-extrabold text-center text-indigo-700 mb-6">To Do List</h1>
       <div className="space-y-6">
         {error ? <p className="text-center text-gray-500">{error}</p> : <></>}
         {allTask.length === 0 ? (

@@ -62,7 +62,7 @@ const TaskCard: React.FC<TaskCardProps> = ( props:TaskCardProps) => {
 
       <div className="flex items-center space-x-2">
         <span className="text-sm text-gray-500">
-          Due: {new Date(props.task.dueDate).toLocaleDateString()}
+          Due: {props.task.dueDate}
         </span>
       </div>
 

@@ -8,7 +8,26 @@ const instance = axios.create({
     timeout: 1000
   });
 
-export const getTask = async () => instance.get(apiPath.task);
+interface iFilters {
+  status?:number;
+  orderBy?: string;
+  orderDirection?: number;
+}
+
+export const getTask = async (filters:iFilters) => {
+  const params = {};
+
+
+  if(typeof filters.status !== "undefined" && filters.status >=0 ){
+    params.completed = filters.status;
+  }
+
+
+  return instance.get(apiPath.task, {
+    params: params,
+  });
+
+}
 
 export const createTask = async (taskItem:TaskItem) => instance.post(apiPath.task, JSON.stringify({...taskItem, due_date: taskItem.dueDate}), {
   headers: {

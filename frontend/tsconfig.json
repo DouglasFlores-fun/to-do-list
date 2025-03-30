@@ -1,0 +1,17 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": "./src",  // This makes the "src" folder the base path
+    "paths": {
+      "components/*": ["./components/*"],
+      "pages/*": ["./pages/*"],
+      "interfaces/*": ["./interfaces/*"],
+      "helpers/*": ["./helpers/*"],
+    },
+    "jsx": "react-jsx"
+  }
+}

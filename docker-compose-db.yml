@@ -1,0 +1,24 @@
+services:
+  mariadb:
+    image: mariadb:10.11
+    container_name: todo-mariadb
+    restart: always
+    #ports:
+    #  - "3306:3306"
+    environment:
+      - MARIADB_DATABASE=toDoList
+      - MARIADB_USER=toDoList
+      - MARIADB_PASSWORD=toDoList
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - app_network
+
+volumes:
+  mariadb_data:
+
+networks:
+  app_network:
+    name: todo-network
+    driver: bridge
